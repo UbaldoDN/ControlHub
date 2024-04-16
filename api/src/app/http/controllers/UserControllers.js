@@ -2,7 +2,7 @@ import UserServices from "../services/UserServices.js";
 
 const index = async (request, response) => {
     try {
-        const users = await UserServices.index();
+        const users = await UserServices.list();
         if (!users) {
             return response.json([]);
         }
@@ -20,7 +20,6 @@ const index = async (request, response) => {
 
 const store = async (request, response) => {
     try {
-        firstName, lastName, email, role
         const { firstName, lastName, email, role } = request.body;
         const user = await UserServices.store(firstName, lastName, email, role);
         response.status(201).json(await responseJsonFormat(user));

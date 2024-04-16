@@ -2,13 +2,14 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
+import CheckUserRole from "./app/http/middleware/CheckUserRoleMiddleware.js";
+import CourseRequests from "./app/http/requests/CourseRequests.js";
 import UserRoutes from "./routes/UserRoutes.js";
-import EnrollmentRoutes from "./routes/EnrollmentRoutes.js";
 import CourseRoutes from "./routes/CourseRoutes.js";
 import LessonRoutes from "./routes/LessonRoutes.js";
+/* import EnrollmentRoutes from "./routes/EnrollmentRoutes.js";
 import QuestionRoutes from "./routes/QuestionRoutes.js";
-import CourseRequests from "./app/http/requests/CourseRequests.js";
-import LessonRequests from "./app/http/requests/LessonRequests.js";
+import LessonRequests from "./app/http/requests/LessonRequests.js"; */
 
 // Create the express app and  import the type of app from express;
 const app = express();
@@ -33,13 +34,13 @@ app.get("/health", async (request, response) => {
     response.send({ message: "Health OK!"});
 });
 
-app.use("/api/users", UserRoutes);
-app.use("/api/enrollment", EnrollmentRoutes);
+app.use("/api/users", await CheckUserRole('admin'), UserRoutes);
 app.use("/api/courses", CourseRoutes);
-app.use("/api/courses/:courseId", CourseRequests.validId);
+app.use("/api/courses/:courseId", CourseRequests.validateCourseId);
 app.use("/api/courses/:courseId/lessons", LessonRoutes);
+/* app.use("/api/enrollment", EnrollmentRoutes);
 app.use("/api/courses/:courseId/lessons/:lessonId", LessonRequests.validId);
-app.use("/api/courses/:courseId/lessons/:lessonId/questions", QuestionRoutes);
+app.use("/api/courses/:courseId/lessons/:lessonId/questions", QuestionRoutes); */
 
 // Listen the server
 app.listen(PORT, async () => {

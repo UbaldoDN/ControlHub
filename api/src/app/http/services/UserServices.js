@@ -33,10 +33,25 @@ const list = async () => {
     return await User.find({});
 }
 
+const existsById = async (userId) => {
+    return await User.exists({ _id: userId });
+}
+
+const existsByEmail = async (email) => {
+    return await User.exists({ email: email });
+}
+
+const existsByIdAndEmail = async (email, userId) => {
+    return await User.exists({  _id: { $ne : userId }, email: email });
+}
+
 export default {
     destroy,
     store,
     update,
     get,
     list,
+    existsById,
+    existsByEmail,
+    existsByIdAndEmail,
 }

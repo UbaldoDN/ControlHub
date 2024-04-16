@@ -1,4 +1,4 @@
-import express from "express";
+/* import express from "express";
 import EnrollmentRequests from "../app/http/requests/EnrollmentRequests.js";
 import EnrollmentControllers from "../app/http/controllers/EnrollmentControllers.js";
 
@@ -10,4 +10,4 @@ router.post("/", EnrollmentRequests.validationPost, EnrollmentControllers.store)
 router.put("/:enrollmentId", EnrollmentRequests.validationPut, EnrollmentControllers.update);
 router.delete("/:enrollmentId", EnrollmentRequests.validationDelete, EnrollmentControllers.destroy);
 
-export default router;
+export default router; */

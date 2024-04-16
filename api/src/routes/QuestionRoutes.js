@@ -1,4 +1,4 @@
-import express from "express";
+/* import express from "express";
 import QuestionRequests from "../app/http/requests/QuestionRequests.js";
 import QuestionControllers from "../app/http/controllers/QuestionControllers.js";
 
@@ -10,4 +10,4 @@ router.post("/", QuestionRequests.validationPost, QuestionControllers.store);
 router.put("/:questionId", QuestionRequests.validationPut, QuestionControllers.update);
 router.delete("/:questionId", QuestionRequests.validationDelete, QuestionControllers.destroy);
 
-export default router;
+export default router; */

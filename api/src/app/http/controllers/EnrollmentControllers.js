@@ -1,4 +1,4 @@
-import EnrollmentServices from "../services/EnrollmentServices.js";
+/* import EnrollmentServices from "../services/EnrollmentServices.js";
 
 const index = async (request, response) => {
     try {
@@ -79,4 +79,4 @@ export default {
     get,
     index,
     destroy
-};
+}; */

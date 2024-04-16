@@ -2,7 +2,7 @@ import LessonServices from "../services/LessonServices.js";
 
 const index = async (request, response) => {
     try {
-        const lessons = await CouserServices.index();
+        const lessons = await LessonServices.list();
         if (!lessons) {
             return response.json([]);
         }
@@ -20,8 +20,8 @@ const index = async (request, response) => {
 
 const store = async (request, response) => {
     try {
-        const { title, passingThreshold, isAvailable, questions } = request.body;
-        const lesson = await LessonServices.store(title, passingThreshold, isAvailable, questions);
+        const { title, passingThreshold } = request.body;
+        const lesson = await LessonServices.store(title, passingThreshold, false, []);
         response.status(201).json(await responseJsonFormat(lesson));
     } catch (error) {
         console.log(error);
@@ -32,12 +32,24 @@ const store = async (request, response) => {
 const update = async (request, response) => {
     try {      
         const { lessonId } = request.params;
-        const { title, passingThreshold, isAvailable, questions } = request.body;
-        const lesson = await LessonServices.update(title, passingThreshold, isAvailable, questions, lessonId);
+        const { title, passingThreshold } = request.body;
+        const lesson = await LessonServices.update(title, passingThreshold, lessonId);
         response.json(await responseJsonFormat(lesson));
     } catch (error) {
         console.log("error", error);
         response.status(500).json({ message: "Error al actualizar la lección.", errorMessage: error}); 
+    }
+};
+
+const updateAvailable = async (request, response) => {
+    try {
+        const { lessonId } = request.params;
+        const { available } = request.body;
+        const lesson = await LessonServices.updateAvailable(available, lessonId);
+        response.json(await responseJsonFormat(lesson));
+    } catch (error) {
+        console.log("error", error);
+        response.status(500).json({ message: "Error al actualizar la disponibilidad del curso.", errorMessage: error}); 
     }
 };
 
@@ -64,12 +76,13 @@ const destroy = async (request, response) => {
 };
 
 const responseJsonFormat = async (lesson) => {
-    await lesson.populate("questions");
+    //await lesson.populate("questions");
     return {
         id: lesson._id,
+        title: lesson.title,
         passingThreshold: lesson.passing_threshold,
         isAvailable: lesson.is_available,
-        questions: lesson.questions.map( question => {
+        /* questions: lesson.questions.map( question => {
             return {
                 id: question._id,
                 type: question.type,
@@ -78,13 +91,14 @@ const responseJsonFormat = async (lesson) => {
                 correctAnswers: question.correct_answers,
                 score: question.score,
             }
-        } )
+        } ) */
     }
 };
 
 export default {
     store,
     update,
+    updateAvailable,
     get,
     index,
     destroy

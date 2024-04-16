@@ -1,4 +1,4 @@
-import QuestionServices from "../services/QuestionServices.js";
+/* import QuestionServices from "../services/QuestionServices.js";
 
 const index = async (request, response) => {
     try {
@@ -80,4 +80,4 @@ export default {
     get,
     index,
     destroy
-};
+}; */

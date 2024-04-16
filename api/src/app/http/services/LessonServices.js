@@ -11,12 +11,17 @@ const store = async (title, passingThreshold, isAvailable, questions) => {
     return await lesson.save();
 }
 
-const update = async (title, passingThreshold, isAvailable, questions, lessonId) => {
+const update = async (title, passingThreshold, lessonId) => {
     const lesson = await get(lessonId);
     lesson.title = title;
     lesson.passing_threshold = passingThreshold;
-    lesson.is_available = isAvailable;
-    lesson.questions = questions;
+    
+    return await lesson.save();
+}
+
+const updateAvailable = async (available, lessonId) => {
+    const lesson = await get(lessonId);
+    lesson.is_available = available;
     
     return await lesson.save();
 }
@@ -33,10 +38,26 @@ const list = async () => {
     return await Lesson.find({});
 }
 
+const existsById = async (lessonId) => {
+    return await Lesson.exists({ _id: lessonId });
+}
+
+const existsByTitle = async (title) => {
+    return await Lesson.exists({ title: title });
+}
+
+const existsByIdAndTitle = async (title, lessonId) => {
+    return await Lesson.exists({  _id: { $ne : lessonId }, title: title });
+}
+
 export default {
     destroy,
     store,
     update,
+    updateAvailable,
     get,
     list,
+    existsById,
+    existsByTitle,
+    existsByIdAndTitle,
 }
