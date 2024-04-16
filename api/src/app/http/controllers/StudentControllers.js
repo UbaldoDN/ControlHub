@@ -67,8 +67,7 @@ const getEnrolls = async (request, response) => {
     try {
         const { studentId } = request.params;
         const student = await EnrollmentServices.getByStudent(studentId);
-        console.log(student);
-        //response.json(await responseJsonFormat(enrolls));
+        response.json(await responseJsonFormatEnrolls(student));
     } catch (error) {
         console.log(error);
         response.status(500).json({ message: "Error al matricular a un estudiante y un curso." })
@@ -110,6 +109,30 @@ const responseJsonFormat = async (course) => {
         isApproved: course.is_approved,
         isAvailable: course.is_available,
         lessons: populateRelations
+    }
+};
+
+const responseJsonFormatEnrolls = async (student) => {
+    let populateRelations = [];
+    await student.populate("student");
+    if (student.enrolled_courses && student.enrolled_courses.length > 0) {
+        await student.populate("enrolled_courses");
+        populateRelations = student.enrolled_courses.map(course => {
+            return {
+                id: course._id,
+                title: course.title,
+                isApproved: course.is_approved,
+                isAvailable: course.is_available
+            }
+        });
+    }
+
+    return {
+        id: student._id,
+        firstName: student.first_name,
+        lastName: student.last_name,
+        email: student.email,
+        enrolledCourses: populateRelations
     }
 };
 
