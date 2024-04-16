@@ -9,6 +9,7 @@ import CourseRoutes from "./routes/CourseRoutes.js";
 import LessonRoutes from "./routes/LessonRoutes.js";
 import LessonRequests from "./app/http/requests/LessonRequests.js";
 import QuestionRoutes from "./routes/QuestionRoutes.js";
+import StudentRoutes from "./routes/StudentRoutes.js";
 /* import EnrollmentRoutes from "./routes/EnrollmentRoutes.js";*/
 
 // Create the express app and  import the type of app from express;
@@ -35,11 +36,13 @@ app.get("/health", async (request, response) => {
 });
 
 app.use("/api/users", await CheckUserRole('admin'), UserRoutes);
-app.use("/api/courses", CourseRoutes);
-app.use("/api/courses/:courseId", CourseRequests.validateCourseId);
-app.use("/api/courses/:courseId/lessons", LessonRoutes);
-app.use("/api/courses/:courseId/lessons/:lessonId", LessonRequests.validateLessonId);
-app.use("/api/courses/:courseId/lessons/:lessonId/questions", QuestionRoutes);
+app.use("/api/courses", await CheckUserRole('teacher'), CourseRoutes);
+app.use("/api/courses/:courseId", await CheckUserRole('teacher'), CourseRequests.validateCourseId);
+app.use("/api/courses/:courseId/lessons", await CheckUserRole('teacher'), LessonRoutes);
+app.use("/api/courses/:courseId/lessons/:lessonId", await CheckUserRole('teacher'), LessonRequests.validateLessonId);
+app.use("/api/courses/:courseId/lessons/:lessonId/questions", await CheckUserRole('teacher'), QuestionRoutes);
+
+app.use("/api/students", await CheckUserRole('student'), StudentRoutes);
 /* app.use("/api/enrollment", EnrollmentRoutes);*/
 
 // Listen the server

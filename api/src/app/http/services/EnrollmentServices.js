@@ -4,11 +4,28 @@ const getByStudent = async (studentId) => {
     return await Enrollment.findOne({ student: studentId });
 }
 
-const list = async () => {
-    return await Enrollment.find({});
+const existsEnrollment = async (studentId, courseId) => {
+    return await Enrollment.findOne({ student: studentId, enrolled_courses: { $in: [courseId] } });
 }
 
-const pullEnrollmentCourse = async (studentId, courseId) => {
+const store = async (studentId, courseId) => {
+    const enrollment = new Enrollment({
+        student: studentId,
+        enrollment_date: Date.now()
+    });
+
+    enrollment.enrolled_courses.push(courseId);
+    return await enrollment.save();
+}
+
+const pushEnrollmentCourse = async (studentId, courseId) => {
+    const student = await getByStudent(studentId);
+    student.enrolled_courses.push(courseId);
+    student.enrollment_date = Date.now()
+    return await student.save();
+}
+
+const pullUnEnrollmentCourse = async (studentId, courseId) => {
     const student = await getByStudent(studentId);
     const indexOf = student.enrolled_courses.indexOf(courseId);
 
@@ -21,34 +38,10 @@ const pullEnrollmentCourse = async (studentId, courseId) => {
     return await student;
 }
 
-const pushEnrollment = async (studentId, keyEnrollment, typeId) => {
-    const student = await get(studentId);
-    student[keyEnrollment].push(typeId);
-    return await student.save();
-}
-
-const pushEnrollmentCourse = async (studentId, courseId) => {
-    return await pushEnrollment(studentId, "enrolled_courses", courseId);
-}
-
-const pushCompletedCourse = async (studentId, courseId) => {
-    return await pushEnrollment(studentId, "completed_courses", courseId);
-}
-
-const pushCompletedLesson = async (studentId, lessonId) => {
-    return await pushEnrollment(studentId, "completed_lessons", lessonId);
-}
-
-const pushCompletedQuestion = async (studentId, questionId) => {
-    return await pushEnrollment(studentId, "completed_questions", questionId);
-}
-
 export default {
-    getByStudent,
-    list,
-    pullEnrollmentCourse,
+    pullUnEnrollmentCourse,
     pushEnrollmentCourse,
-    pushCompletedCourse,
-    pushCompletedLesson,
-    pushCompletedQuestion,
+    store,
+    existsEnrollment,
+    getByStudent,
 }
