@@ -1,11 +1,15 @@
 import Enrollment from "../../models/Enrollment.js";
 
-const get = async (lessonId) => {
-    return await Enrollment.findById(lessonId);
+const getByStudent = async (studentId) => {
+    return await Enrollment.findOne({ student: studentId });
+}
+
+const list = async () => {
+    return await Enrollment.find({});
 }
 
 const pullEnrollmentCourse = async (studentId, courseId) => {
-    const student = await get(studentId);
+    const student = await getByStudent(studentId);
     const indexOf = student.enrolled_courses.indexOf(courseId);
 
     if (indexOf > -1) {
@@ -40,7 +44,8 @@ const pushCompletedQuestion = async (studentId, questionId) => {
 }
 
 export default {
-    get,
+    getByStudent,
+    list,
     pullEnrollmentCourse,
     pushEnrollmentCourse,
     pushCompletedCourse,
