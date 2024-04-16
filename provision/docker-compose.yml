@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  api:
+    container_name: api
+    build:
+      context: .
+      dockerfile: DockerfileApi
+    depends_on:
+      - mongo
+    volumes:
+      - ~/Sites/ubaldodiaznunez/controlhub/api/:/var/www/vhosts/controlhub/api/
+    ports:
+      - 9000:9000
+    networks:
+      - controlhub-network
+  mongo:
+    container_name: mongo
+    image: mongodb/mongodb-community-server:6.0.8-ubuntu2204
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 1234
+    volumes:
+      - ~/Sites/ubaldodiaznunez/controlhub/provision/_config/mongo:/data/db
+    networks:
+      - controlhub-network
+networks:
+  controlhub-network:
+    driver: bridge
+volumes:
+  mongo:

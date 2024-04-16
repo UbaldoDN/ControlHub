@@ -1,0 +1,10 @@
+FROM node:20-alpine
+
+RUN apk update
+
+RUN apk add nodejs npm yarn
+
+WORKDIR /var/www/vhosts/controlhub/api
+RUN yarn
+
+CMD cd /var/www/vhosts/controlhub/api && yarn && yarn dev
