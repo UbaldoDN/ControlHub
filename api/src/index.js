@@ -7,9 +7,9 @@ import CourseRequests from "./app/http/requests/CourseRequests.js";
 import UserRoutes from "./routes/UserRoutes.js";
 import CourseRoutes from "./routes/CourseRoutes.js";
 import LessonRoutes from "./routes/LessonRoutes.js";
-/* import EnrollmentRoutes from "./routes/EnrollmentRoutes.js";
+import LessonRequests from "./app/http/requests/LessonRequests.js";
 import QuestionRoutes from "./routes/QuestionRoutes.js";
-import LessonRequests from "./app/http/requests/LessonRequests.js"; */
+/* import EnrollmentRoutes from "./routes/EnrollmentRoutes.js";*/
 
 // Create the express app and  import the type of app from express;
 const app = express();
@@ -38,9 +38,9 @@ app.use("/api/users", await CheckUserRole('admin'), UserRoutes);
 app.use("/api/courses", CourseRoutes);
 app.use("/api/courses/:courseId", CourseRequests.validateCourseId);
 app.use("/api/courses/:courseId/lessons", LessonRoutes);
-/* app.use("/api/enrollment", EnrollmentRoutes);
-app.use("/api/courses/:courseId/lessons/:lessonId", LessonRequests.validId);
-app.use("/api/courses/:courseId/lessons/:lessonId/questions", QuestionRoutes); */
+app.use("/api/courses/:courseId/lessons/:lessonId", LessonRequests.validateLessonId);
+app.use("/api/courses/:courseId/lessons/:lessonId/questions", QuestionRoutes);
+/* app.use("/api/enrollment", EnrollmentRoutes);*/
 
 // Listen the server
 app.listen(PORT, async () => {

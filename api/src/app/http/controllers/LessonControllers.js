@@ -1,4 +1,5 @@
 import LessonServices from "../services/LessonServices.js";
+import CourseServices from "../services/CourseServices.js";
 
 const index = async (request, response) => {
     try {
@@ -20,8 +21,10 @@ const index = async (request, response) => {
 
 const store = async (request, response) => {
     try {
+        const { courseId } = request.params;
         const { title, passingThreshold } = request.body;
         const lesson = await LessonServices.store(title, passingThreshold, false, []);
+        await CourseServices.pushLessonId(lesson._id, courseId);
         response.status(201).json(await responseJsonFormat(lesson));
     } catch (error) {
         console.log(error);
@@ -76,22 +79,27 @@ const destroy = async (request, response) => {
 };
 
 const responseJsonFormat = async (lesson) => {
-    //await lesson.populate("questions");
+    let populateQuestions = [];
+    if (lesson.questions && lesson.questions.length > 0) {
+        await lesson.populate("questions");
+        populateQuestions = lesson.questions.map( question => {
+            return {
+                id: question._id,
+                type: question.type,
+                content: question.content,
+                answers: question.answers,
+                correctAnswers: question.correct_answers,
+                points: question.points,
+            }
+        } );
+    }
+
     return {
         id: lesson._id,
         title: lesson.title,
         passingThreshold: lesson.passing_threshold,
         isAvailable: lesson.is_available,
-        /* questions: lesson.questions.map( question => {
-            return {
-                id: question._id,
-                type: question.type,
-                content: question.content,
-                options: question.options,
-                correctAnswers: question.correct_answers,
-                score: question.score,
-            }
-        } ) */
+        questions: populateQuestions
     }
 };
 

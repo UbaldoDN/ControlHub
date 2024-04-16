@@ -50,6 +50,25 @@ const existsByIdAndTitle = async (title, lessonId) => {
     return await Lesson.exists({  _id: { $ne : lessonId }, title: title });
 }
 
+const pushQuestionId = async (questionId, lessonId) => {
+    const lesson = await get(lessonId);
+    lesson.questions.push(questionId);
+    return await lesson.save();
+}
+
+const pullQuestionId = async (questionId, lessonId) => {
+    const lesson = await get(lessonId);
+    const indexOf = lesson.questions.indexOf(questionId);
+
+    if (indexOf > -1) {
+        lesson.questions.splice(indexOf, 1);
+
+        await lesson.save();
+    }
+
+    return await lesson;
+}
+
 export default {
     destroy,
     store,
@@ -60,4 +79,6 @@ export default {
     existsById,
     existsByTitle,
     existsByIdAndTitle,
+    pushQuestionId,
+    pullQuestionId,
 }

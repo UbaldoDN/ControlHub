@@ -1,8 +1,9 @@
-/* import QuestionServices from "../services/QuestionServices.js";
+import LessonServices from "../services/LessonServices.js";
+import QuestionServices from "../services/QuestionServices.js";
 
 const index = async (request, response) => {
     try {
-        const questions = await QuestionServices.index();
+        const questions = await QuestionServices.list();
         if (!questions) {
             return response.json([]);
         }
@@ -20,8 +21,10 @@ const index = async (request, response) => {
 
 const store = async (request, response) => {
     try {
-        const { type, content, options, correctAnswers, score } = request.body;
-        const question = await QuestionServices.store(type, content, options, correctAnswers, score);
+        const { lessonId } = request.params;
+        const { type, content, answers, correctAnswers, points } = request.body;
+        const question = await QuestionServices.store(type, content, answers, correctAnswers, points);
+        await LessonServices.pushQuestionId(question._id, lessonId);
         response.status(201).json(await responseJsonFormat(question));
     } catch (error) {
         console.log(error);
@@ -32,8 +35,8 @@ const store = async (request, response) => {
 const update = async (request, response) => {
     try {      
         const { questionId } = request.params;
-        const { type, content, options, correctAnswers, score } = request.body;
-        const question = await QuestionServices.update(type, content, options, correctAnswers, score, questionId);
+        const { type, content, answers, correctAnswers, points } = request.body;
+        const question = await QuestionServices.update(type, content, answers, correctAnswers, points, questionId);
         response.json(await responseJsonFormat(question));
     } catch (error) {
         console.log("error", error);
@@ -68,9 +71,9 @@ const responseJsonFormat = async (question) => {
         id: question._id,
         type: question.type,
         content: question.content,
-        options: question.options,
+        answers: question.answers,
         correctAnswers: question.correct_answers,
-        score: question.score
+        points: question.points
     }
 };
 
@@ -80,4 +83,4 @@ export default {
     get,
     index,
     destroy
-}; */
+};

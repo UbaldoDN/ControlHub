@@ -56,6 +56,25 @@ const existsByIdAndTitle = async (title, courseId) => {
     return await Course.exists({  _id: { $ne : courseId }, title: title });
 }
 
+const pushLessonId = async (lessonId, courseId) => {
+    const course = await get(courseId);
+    course.lessons.push(lessonId);
+    return await course.save();
+}
+
+const pullLessonId = async (lessonId, courseId) => {
+    const course = await get(courseId);
+    const indexOf = course.lessons.indexOf(lessonId);
+
+    if (indexOf > -1) {
+        course.lessons.splice(indexOf, 1);
+
+        await course.save();
+    }
+
+    return await course;
+}
+
 export default {
     destroy,
     store,
@@ -67,4 +86,6 @@ export default {
     existsById,
     existsByTitle,
     existsByIdAndTitle,
+    pushLessonId,
+    pullLessonId,
 }

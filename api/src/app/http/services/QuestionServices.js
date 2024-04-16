@@ -1,24 +1,24 @@
 import Question from "../../models/Question.js";
 
-const store = async (type, content, options, correctAnswers, score) => {
+const store = async (type, content, answers, correctAnswers, points) => {
     const question = new Question({
         type: type,
         content: content,
-        options: options,
+        answers: answers,
         correct_answers: correctAnswers,
-        score: score
+        points: points
     });
 
     return await question.save();
 }
 
-const update = async (type, content, options, correctAnswers, score, questionId) => {
+const update = async (type, content, answers, correctAnswers, points, questionId) => {
     const question = await get(questionId);
     question.type = type;
     question.content = content;
-    question.options = options;
+    question.answers = answers;
     question.correct_answers = correctAnswers;
-    question.score = score;
+    question.points = points;
     
     return await question.save();
 }
@@ -35,10 +35,25 @@ const list = async () => {
     return await Question.find({});
 }
 
+const existsById = async (questionId) => {
+    return await Question.exists({ _id: questionId });
+}
+
+const existsByContent = async (content) => {
+    return await Question.exists({ content: content });
+}
+
+const existsByIdAndContent = async (content, questionId) => {
+    return await Question.exists({  _id: { $ne : questionId }, content: content });
+}
+
 export default {
     destroy,
     store,
     update,
     get,
     list,
+    existsById,
+    existsByContent,
+    existsByIdAndContent,
 }

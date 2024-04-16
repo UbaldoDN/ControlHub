@@ -88,20 +88,25 @@ const destroy = async (request, response) => {
 };
 
 const responseJsonFormat = async (course) => {
-    //await course.populate("lessons");
-    return {
-        id: course._id,
-        title: course.title,
-        isApproved: course.is_approved,
-        isAvailable: course.is_available,
-        /*lessons: course.lessons.map( lesson => {
+    let populateLessons = [];
+    if (course.lessons && course.lessons.length > 0) {
+        await course.populate("lessons");
+        populateLessons = course.lessons.map( lesson => {
             return {
                 id: lesson._id,
                 title: lesson.title,
                 passingThreshold: lesson.passing_threshold,
                 isAvailable: lesson.is_available
             }
-        } )*/
+        } );
+    }
+
+    return {
+        id: course._id,
+        title: course.title,
+        isApproved: course.is_approved,
+        isAvailable: course.is_available,
+        lessons: populateLessons
     }
 };
 
