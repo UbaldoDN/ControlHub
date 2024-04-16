@@ -1,11 +1,13 @@
 import express from "express";
+import UserRequests from "../app/http/requests/UserRequests.js";
+import UserControllers from "../app/http/controllers/UserControllers.js";
 
 const router = express.Router({ mergeParams: true });
 
-router.get("/", Course.index);
-router.get("/:courseId", Course.get);
-router.post("/", CourseFormRequest.validationPost, Course.store);
-router.put("/:courseId", CourseFormRequest.validationPut, Course.update);
-router.delete("/:courseId", CourseFormRequest.validationDelete, Course.destroy);
+router.get("/", UserControllers.index);
+router.get("/:userId", UserControllers.get);
+router.post("/", UserRequests.validationPost, UserControllers.store);
+router.put("/:UserControllerId", UserRequests.validationPut, UserControllers.update);
+router.delete("/:UserControllerId", UserRequests.validationDelete, UserControllers.destroy);
 
 export default router;

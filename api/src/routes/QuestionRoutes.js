@@ -1,11 +1,13 @@
 import express from "express";
+import QuestionRequests from "../app/http/requests/QuestionRequests.js";
+import QuestionControllers from "../app/http/controllers/QuestionControllers.js";
 
 const router = express.Router({ mergeParams: true });
 
-router.get("/", Question.index);
-router.get("/:questionId", Question.get);
-router.post("/", QuestionFormRequest.validationPost, Question.store);
-router.put("/:questionId", QuestionFormRequest.validationPut, Question.update);
-router.delete("/:questionId", QuestionFormRequest.validationDelete, Question.destroy);
+router.get("/", QuestionControllers.index);
+router.get("/:questionId", QuestionControllers.get);
+router.post("/", QuestionRequests.validationPost, QuestionControllers.store);
+router.put("/:questionId", QuestionRequests.validationPut, QuestionControllers.update);
+router.delete("/:questionId", QuestionRequests.validationDelete, QuestionControllers.destroy);
 
 export default router;

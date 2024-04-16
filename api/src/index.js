@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
 import UserRoutes from "./routes/UserRoutes.js";
-import StudentRoutes from "./routes/StudentRoutes.js";
+import EnrollmentRoutes from "./routes/EnrollmentRoutes.js";
 import CourseRoutes from "./routes/CourseRoutes.js";
 import LessonRoutes from "./routes/LessonRoutes.js";
 import QuestionRoutes from "./routes/QuestionRoutes.js";
@@ -34,7 +34,7 @@ app.get("/health", async (request, response) => {
 });
 
 app.use("/api/users", UserRoutes);
-app.use("/api/students", StudenRoutes);
+app.use("/api/enrollment", EnrollmentRoutes);
 app.use("/api/courses", CourseRoutes);
 app.use("/api/courses/:courseId", CourseRequests.validId);
 app.use("/api/courses/:courseId/lessons", LessonRoutes);
