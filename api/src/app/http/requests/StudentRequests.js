@@ -40,6 +40,11 @@ const validateNotExistsEnroll = [
     param("studentId")
         .custom( async (value, { req }) => {
             const { studentId, courseId } = req.params;
+            console.log(await CourseServices.get(courseId));
+            if (!(await CourseServices.get(courseId)).is_available) {
+                throw new Error ('El curso no esta disponible.');
+            }
+
             if (await EnrollmentServices.existsEnrollment(studentId, courseId)) {
                 throw new Error ('El estudiante ya se encuentra matriculado en el curso.');
             }
@@ -49,8 +54,8 @@ const validateNotExistsEnroll = [
 const validateExistsEnroll = [
     param("studentId")
         .custom( async (value, { req }) => {
-            const { studentId, courseId } = req.params;
-            if (!await EnrollmentServices.existsEnrollment(studentId, courseId)) {
+            const { studentId } = req.params;
+            if ((await EnrollmentServices.getByStudent(studentId)).enrolled_courses.length === 0) {
                 throw new Error ('El estudiante no se encuentra matriculado en el curso.');
             }
         }),
@@ -58,6 +63,12 @@ const validateExistsEnroll = [
 
 const validateList = [
     [...validateStudentId],
+    handle
+];
+
+const validateEnrollList = [
+    [...validateStudentId],
+    [...validateExistsEnroll],
     handle
 ];
 
@@ -86,4 +97,5 @@ export default {
     validateUnEnrollment,
     validateGet,
     validateList,
+    validateEnrollList,
 }

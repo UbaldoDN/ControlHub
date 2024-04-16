@@ -112,12 +112,12 @@ const responseJsonFormat = async (course) => {
     }
 };
 
-const responseJsonFormatEnrolls = async (student) => {
+const responseJsonFormatEnrolls = async (enroll) => {
     let populateRelations = [];
-    await student.populate("student");
-    if (student.enrolled_courses && student.enrolled_courses.length > 0) {
-        await student.populate("enrolled_courses");
-        populateRelations = student.enrolled_courses.map(course => {
+    await enroll.populate("student");
+    if (enroll.enrolled_courses && enroll.enrolled_courses.length > 0) {
+        await enroll.populate("enrolled_courses");
+        populateRelations = enroll.enrolled_courses.map(course => {
             return {
                 id: course._id,
                 title: course.title,
@@ -127,11 +127,12 @@ const responseJsonFormatEnrolls = async (student) => {
         });
     }
 
+    console.log(enroll);
     return {
-        id: student._id,
-        firstName: student.first_name,
-        lastName: student.last_name,
-        email: student.email,
+        id: enroll.student._id,
+        firstName: enroll.student.first_name,
+        lastName: enroll.student.last_name,
+        email: enroll.student.email,
         enrolledCourses: populateRelations
     }
 };

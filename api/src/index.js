@@ -10,7 +10,6 @@ import LessonRoutes from "./routes/LessonRoutes.js";
 import LessonRequests from "./app/http/requests/LessonRequests.js";
 import QuestionRoutes from "./routes/QuestionRoutes.js";
 import StudentRoutes from "./routes/StudentRoutes.js";
-/* import EnrollmentRoutes from "./routes/EnrollmentRoutes.js";*/
 
 // Create the express app and  import the type of app from express;
 const app = express();
@@ -43,7 +42,6 @@ app.use("/api/courses/:courseId/lessons/:lessonId", await CheckUserRole('teacher
 app.use("/api/courses/:courseId/lessons/:lessonId/questions", await CheckUserRole('teacher'), QuestionRoutes);
 
 app.use("/api/students", await CheckUserRole('student'), StudentRoutes);
-/* app.use("/api/enrollment", EnrollmentRoutes);*/
 
 // Listen the server
 app.listen(PORT, async () => {
