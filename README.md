@@ -1,5 +1,12 @@
 # API de ControlHub
 
+## Nota:
+En todas las solicitudes realizadas deben tener la cabecera "User-Role" y tiene 3 valores "admin", "teacher" y "student", estoy simulando que existe un usuario logeado con roles en especifico para poder acceder a sus rutas correspondiente, la cabecera es la siguiente:
+
+```json
+    User-Role = admin || teacher || student
+```
+
 ## Instalación y Configuración
 
 ### Elección
