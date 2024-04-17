@@ -2,6 +2,14 @@
 
 ## Instalación y Configuración
 
+### Elección
+- **Express**: Me base en su eficiencia y flexibilidad para desarrollar APIs.
+- **Mongoose**: Te ayuda agilizar y a simplificar la interacción con la DB.
+
+### Frameworks y Bibliotecas Utilizados
+- **Express**: Utilizado como el framework principal para la creación de la API debido a su simplicidad y flexibilidad. Es un framework que estoy aprendiendo asi que el motivo fue para poner a prueba tambien mis conocimientos.
+- **Mongoose**: Base de Datos No Relacional, utilizado para modelar y gestionar los datos de MongoDB. Lo mismo que con el framework, lo estoy aprendiendo y quise aplicarlo.
+
 ### Docker
 
 #### Instalación de Docker
