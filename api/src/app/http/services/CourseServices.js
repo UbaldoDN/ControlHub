@@ -1,11 +1,12 @@
 import Course from "../../models/Course.js";
 
-const store = async (title, isApproved, isAvailable, lessons) => {
+const store = async (title, isApproved, isAvailable, lessons, order) => {
     const course = new Course({
         title: title,
         is_approved: isApproved,
         is_available: isAvailable,
         lessons: lessons,
+        order: order,
     });
 
     return await course.save();
@@ -75,6 +76,10 @@ const pullLessonId = async (lessonId, courseId) => {
     return await course;
 }
 
+const getLastOrder = async () => {
+    return await Course.findOne({}, {}, { sort: { 'order': -1 } })
+}
+
 export default {
     destroy,
     store,
@@ -88,4 +93,5 @@ export default {
     existsByIdAndTitle,
     pushLessonId,
     pullLessonId,
+    getLastOrder,
 }

@@ -50,22 +50,22 @@ const validateAvailable = [
         .withMessage('La disponibilidad de la lección solo acepta 2 valores: "Sí está disponible" o "No está disponible".')
 ];
 
-const validatePassingThreshold = [
-    body("passingThreshold")
+const validateThreshold = [
+    body("threshold")
         .isInt({ min: 0, max: 100 })
         .withMessage('El umbral de aprobación debe ser un número entre 0 y 100, sin decimales.'),
 ];
 
 const validatePost = [
     [...validateTitle],
-    [...validatePassingThreshold],
+    [...validateThreshold],
     handle
 ];
 
 const validatePut = [
     [...validateLessonId],
     [...validateTitle],
-    [...validatePassingThreshold],
+    [...validateThreshold],
     handle
 ];
 

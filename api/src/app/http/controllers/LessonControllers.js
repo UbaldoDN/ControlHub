@@ -22,8 +22,10 @@ const index = async (request, response) => {
 const store = async (request, response) => {
     try {
         const { courseId } = request.params;
-        const { title, passingThreshold } = request.body;
-        const lesson = await LessonServices.store(title, passingThreshold, false, []);
+        const { title, threshold } = request.body;
+        const lastLesson = await LessonServices.getLastOrder();
+        const order = lastLesson && !isNaN(lastLesson.order) ? lastLesson.order + 1 : 1;
+        const lesson = await LessonServices.store(title, threshold, false, [], order);
         await CourseServices.pushLessonId(lesson._id, courseId);
         response.status(201).json(await responseJsonFormat(lesson));
     } catch (error) {
@@ -35,8 +37,8 @@ const store = async (request, response) => {
 const update = async (request, response) => {
     try {      
         const { lessonId } = request.params;
-        const { title, passingThreshold } = request.body;
-        const lesson = await LessonServices.update(title, passingThreshold, lessonId);
+        const { title, threshold } = request.body;
+        const lesson = await LessonServices.update(title, threshold, lessonId);
         response.json(await responseJsonFormat(lesson));
     } catch (error) {
         console.log("error", error);
@@ -97,7 +99,7 @@ const responseJsonFormat = async (lesson) => {
     return {
         id: lesson._id,
         title: lesson.title,
-        passingThreshold: lesson.passing_threshold,
+        threshold: lesson.threshold,
         isAvailable: lesson.is_available,
         questions: populateQuestions
     }

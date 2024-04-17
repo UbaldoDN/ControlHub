@@ -1,20 +1,21 @@
 import Lesson from "../../models/Lesson.js";
 
-const store = async (title, passingThreshold, isAvailable, questions) => {
+const store = async (title, threshold, isAvailable, questions, order) => {
     const lesson = new Lesson({
         title: title,
-        passing_threshold: passingThreshold,
+        threshold: threshold,
         is_available: isAvailable,
-        questions: questions
+        questions: questions,
+        order: order,
     });
 
     return await lesson.save();
 }
 
-const update = async (title, passingThreshold, lessonId) => {
+const update = async (title, threshold, lessonId) => {
     const lesson = await get(lessonId);
     lesson.title = title;
-    lesson.passing_threshold = passingThreshold;
+    lesson.threshold = threshold;
     
     return await lesson.save();
 }
@@ -69,6 +70,10 @@ const pullQuestionId = async (questionId, lessonId) => {
     return await lesson;
 }
 
+const getLastOrder = async () => {
+    return await Lesson.findOne({}, {}, { sort: { 'order': -1 } })
+}
+
 export default {
     destroy,
     store,
@@ -81,4 +86,5 @@ export default {
     existsByIdAndTitle,
     pushQuestionId,
     pullQuestionId,
+    getLastOrder,
 }

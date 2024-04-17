@@ -96,7 +96,7 @@ const responseJsonFormat = async (course) => {
             return {
                 id: lesson._id,
                 title: lesson.title,
-                passingThreshold: lesson.passing_threshold,
+                threshold: lesson.threshold,
                 isAvailable: lesson.is_available,
                 questions: questions
             }

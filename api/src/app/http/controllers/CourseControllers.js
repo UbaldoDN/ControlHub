@@ -21,7 +21,9 @@ const index = async (request, response) => {
 const store = async (request, response) => {
     try {
         const { title } = request.body;
-        const course = await CourseServices.store(title, false, false, []);
+        const lastCourse = await CourseServices.getLastOrder();
+        const order = lastCourse && !isNaN(lastCourse.order) ? lastCourse.order + 1 : 1;
+        const course = await CourseServices.store(title, false, false, [], order);
         response.status(201).json(await responseJsonFormat(course));
     } catch (error) {
         console.log(error);
@@ -95,7 +97,7 @@ const responseJsonFormat = async (course) => {
             return {
                 id: lesson._id,
                 title: lesson.title,
-                passingThreshold: lesson.passing_threshold,
+                threshold: lesson.threshold,
                 isAvailable: lesson.is_available
             }
         } );
