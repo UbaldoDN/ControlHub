@@ -1,7 +1,7 @@
 {
     "client": "Thunder Client",
     "collectionName": "ControlHub",
-    "dateExported": "2024-04-16T22:56:49.254Z",
+    "dateExported": "2024-04-18T10:52:56.495Z",
     "version": "1.1",
     "folders": [
         {
@@ -88,106 +88,113 @@
             "method": "POST",
             "sortNum": 10000,
             "created": "2024-04-16T13:20:28.691Z",
-            "modified": "2024-04-16T16:55:06.456Z",
+            "modified": "2024-04-18T04:27:12.334Z",
             "headers": [
                 {
                     "name": "User-Role",
                     "value": "teacher"
                 }
             ],
-            "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"title\": \"Introducción a la Computación e Informática\"\n}",
+                "raw": "{\n  \"title\": \"Matemáticas Avanzadas\"\n}",
                 "form": []
-            },
-            "tests": []
+            }
         },
         {
             "_id": "38c37b85-8ec2-4cf7-b1d9-af867261953e",
             "colId": "883e614d-1ffd-4481-92d9-28d491084bae",
             "containerId": "fa494607-b43d-46df-81b8-2ab3e2aaa845",
             "name": "Store",
-            "url": "http://localhost:9000/api/courses/661efa360a189ce75d848ff6/lessons",
+            "url": "http://localhost:9000/api/courses/6620c38ede63435ebdf2fa02/lessons",
             "method": "POST",
             "sortNum": 10000,
             "created": "2024-04-16T13:21:15.190Z",
-            "modified": "2024-04-16T22:26:46.445Z",
+            "modified": "2024-04-18T06:54:16.959Z",
             "headers": [
                 {
                     "name": "User-Role",
                     "value": "teacher"
                 }
             ],
-            "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"title\": \"Seguridad y Ética en la Tecnología\",\n  \"passingThreshold\": 90\n}",
+                "raw": "{\n  \"title\": \"Cálculo Básico\",\n  \"threshold\": 90\n}",
                 "form": []
-            },
-            "tests": []
+            }
         },
         {
             "_id": "bfe39141-3b37-4513-88fd-b2507a3d86df",
             "colId": "883e614d-1ffd-4481-92d9-28d491084bae",
             "containerId": "351a35e3-03a2-4771-b636-f8d389290594",
             "name": "Store",
-            "url": "http://localhost:9000/api/courses/661efa360a189ce75d848ff6/lessons/661efb260a189ce75d849039/questions",
+            "url": "http://localhost:9000/api/courses/6620c38ede63435ebdf2fa02/lessons/6620c398de63435ebdf2fa07/questions",
             "method": "POST",
             "sortNum": 10000,
             "created": "2024-04-16T13:41:21.705Z",
-            "modified": "2024-04-16T22:33:43.929Z",
+            "modified": "2024-04-18T06:54:47.354Z",
             "headers": [
                 {
                     "name": "User-Role",
                     "value": "teacher"
                 }
             ],
-            "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"type\": \"all\",\n  \"content\": \"¿Cuáles de las siguientes prácticas son ejemplos de ética en la tecnología?\",\n  \"answers\": [\"Respetar la privacidad de los usuarios al manejar datos personales\", \"Compartir información sensible de los usuarios sin su consentimiento\", \"Desarrollar software que intente dañar o espiar a los usuarios\", \"Informar a los usuarios sobre cómo se usarán sus datos\"],\n  \"correctAnswers\": [\"Respetar la privacidad de los usuarios al manejar datos personales\", \"Informar a los usuarios sobre cómo se usarán sus datos\"],\n  \"points\": 10\n}",
+                "raw": "{\n  \"type\": \"multiple\",\n  \"content\": \"¿Cuáles de los siguientes números son primosporety?\",\n  \"answers\": [\"2\", \"3\", \"4\", \"5\", \"6\"],\n  \"correctAnswers\": [\"2\", \"3\", \"5\"],\n  \"points\": 10\n}",
                 "form": []
-            },
-            "tests": []
+            }
         },
         {
             "_id": "af1ecd22-280d-40fa-8318-07b30c47b6ff",
             "colId": "883e614d-1ffd-4481-92d9-28d491084bae",
             "containerId": "fd5cbb77-fa82-4e14-a1f7-331f928539e8",
             "name": "List",
-            "url": "http://localhost:9000/api/students/661ef9920a189ce75d848fd0/courses",
+            "url": "http://localhost:9000/api/students/66209e733204b2365848b0fe/courses",
             "method": "GET",
             "sortNum": 10000,
             "created": "2024-04-16T18:59:56.959Z",
-            "modified": "2024-04-16T22:38:08.808Z",
+            "modified": "2024-04-18T04:21:18.023Z",
             "headers": [
                 {
                     "name": "User-Role",
                     "value": "student"
                 }
-            ],
-            "params": [],
-            "tests": []
+            ]
         },
         {
             "_id": "a4947c02-f357-4e35-b20a-019beb918378",
             "colId": "883e614d-1ffd-4481-92d9-28d491084bae",
             "containerId": "fd5cbb77-fa82-4e14-a1f7-331f928539e8",
             "name": "List Enrolls",
-            "url": "http://localhost:9000/api/students/661ef9920a189ce75d848fd0/enrolls",
+            "url": "http://localhost:9000/api/students/66209e733204b2365848b0fe/enrolls",
             "method": "GET",
             "sortNum": 12500,
             "created": "2024-04-16T21:49:54.383Z",
-            "modified": "2024-04-16T22:38:16.344Z",
+            "modified": "2024-04-18T07:35:34.808Z",
             "headers": [
                 {
                     "name": "User-Role",
                     "value": "student"
                 }
-            ],
-            "params": [],
-            "tests": []
+            ]
+        },
+        {
+            "_id": "a1294752-0576-4db9-8919-fb29a998eaf7",
+            "colId": "883e614d-1ffd-4481-92d9-28d491084bae",
+            "containerId": "d1cb8f47-fb1f-4510-a14d-465dc103db3b",
+            "name": "Generate Data",
+            "url": "http://localhost:9000/api/users/generateData",
+            "method": "POST",
+            "sortNum": 12500,
+            "created": "2024-04-18T05:40:58.340Z",
+            "modified": "2024-04-18T05:41:15.092Z",
+            "headers": [
+                {
+                    "name": "User-Role",
+                    "value": "admin"
+                }
+            ]
         },
         {
             "_id": "8a70c166-f907-4ed8-91d6-b458777a577d",
@@ -232,38 +239,34 @@
             "colId": "883e614d-1ffd-4481-92d9-28d491084bae",
             "containerId": "fa494607-b43d-46df-81b8-2ab3e2aaa845",
             "name": "List",
-            "url": "http://localhost:9000/api/courses/661efa360a189ce75d848ff6/lessons",
+            "url": "http://localhost:9000/api/courses/6620f7007ea62875fa0e5aa1/lessons",
             "method": "GET",
             "sortNum": 15000,
             "created": "2024-04-16T13:21:15.191Z",
-            "modified": "2024-04-16T22:25:00.507Z",
+            "modified": "2024-04-18T10:35:44.157Z",
             "headers": [
                 {
                     "name": "User-Role",
                     "value": "teacher"
                 }
-            ],
-            "params": [],
-            "tests": []
+            ]
         },
         {
             "_id": "f7553736-8e75-416b-9c42-c1c7c54f8d79",
             "colId": "883e614d-1ffd-4481-92d9-28d491084bae",
             "containerId": "fd5cbb77-fa82-4e14-a1f7-331f928539e8",
             "name": "UnEnroll",
-            "url": "http://localhost:9000/api/students/661ef9920a189ce75d848fd0/courses/661efa360a189ce75d848ff6/unenroll",
+            "url": "http://localhost:9000/api/students/66209e733204b2365848b0fe/courses/6620bf7b884a8741d0e75387/unenroll",
             "method": "POST",
             "sortNum": 15000,
             "created": "2024-04-16T21:28:20.056Z",
-            "modified": "2024-04-16T22:56:09.965Z",
+            "modified": "2024-04-18T07:56:45.967Z",
             "headers": [
                 {
                     "name": "User-Role",
                     "value": "student"
                 }
-            ],
-            "params": [],
-            "tests": []
+            ]
         },
         {
             "_id": "919e9736-c199-425c-9f81-e7ee0877607f",
@@ -289,57 +292,73 @@
             "colId": "883e614d-1ffd-4481-92d9-28d491084bae",
             "containerId": "c3b49a67-aba0-4f5b-ac29-e9fa7b42603b",
             "name": "Get",
-            "url": "http://localhost:9000/api/courses/661ef9c00a189ce75d848fd3",
+            "url": "http://localhost:9000/api/courses/6620c38ede63435ebdf2fa02",
             "method": "GET",
             "sortNum": 17500,
             "created": "2024-04-16T13:20:28.693Z",
-            "modified": "2024-04-16T22:20:58.826Z",
+            "modified": "2024-04-18T06:55:03.817Z",
             "headers": [
                 {
                     "name": "User-Role",
                     "value": "teacher"
                 }
-            ],
-            "params": [],
-            "tests": []
+            ]
         },
         {
             "_id": "bd97fe08-18c7-4d29-a363-776a4f30fecb",
             "colId": "883e614d-1ffd-4481-92d9-28d491084bae",
             "containerId": "fa494607-b43d-46df-81b8-2ab3e2aaa845",
             "name": "Get",
-            "url": "http://localhost:9000/api/courses/661efa360a189ce75d848ff6/lessons/661efa680a189ce75d849006",
+            "url": "http://localhost:9000/api/courses/6620bf7b884a8741d0e75345/lessons/661efa680a189ce75d849006",
             "method": "GET",
             "sortNum": 17500,
             "created": "2024-04-16T13:21:15.192Z",
-            "modified": "2024-04-16T22:25:07.893Z",
+            "modified": "2024-04-18T06:39:13.241Z",
             "headers": [
                 {
                     "name": "User-Role",
                     "value": "teacher"
                 }
-            ],
-            "params": [],
-            "tests": []
+            ]
         },
         {
             "_id": "089f9ed8-dff9-4f32-916a-b4f6b1032f5a",
             "colId": "883e614d-1ffd-4481-92d9-28d491084bae",
             "containerId": "fd5cbb77-fa82-4e14-a1f7-331f928539e8",
             "name": "Enroll",
-            "url": "http://localhost:9000/api/students/661ef9920a189ce75d848fd0/courses/661efa360a189ce75d848ff6/enroll",
+            "url": "http://localhost:9000/api/students/66209e733204b2365848b0fe/courses/6620f7007ea62875fa0e5aa1/enroll",
             "method": "POST",
             "sortNum": 17500,
             "created": "2024-04-16T21:37:37.138Z",
-            "modified": "2024-04-16T22:43:19.394Z",
+            "modified": "2024-04-18T10:37:04.767Z",
+            "headers": [
+                {
+                    "name": "User-Role",
+                    "value": "student"
+                }
+            ]
+        },
+        {
+            "_id": "fea250a0-1a7e-46ed-a3ba-43140053715e",
+            "colId": "883e614d-1ffd-4481-92d9-28d491084bae",
+            "containerId": "fd5cbb77-fa82-4e14-a1f7-331f928539e8",
+            "name": "Answer Lesson",
+            "url": "http://localhost:9000/api/students/66209e733204b2365848b0fe/courses/6620bf7b884a8741d0e75345/lessons/6620bf7b884a8741d0e75348/answerLesson",
+            "method": "POST",
+            "sortNum": 18750,
+            "created": "2024-04-18T07:59:35.224Z",
+            "modified": "2024-04-18T10:24:09.771Z",
             "headers": [
                 {
                     "name": "User-Role",
                     "value": "student"
                 }
             ],
-            "params": [],
-            "tests": []
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"answers\": [\n      {\n        \"questionId\": \"6620bf7b884a8741d0e7538e\",\n        \"selectedAnswers\": [\"Verdadero\"]\n      },\n      {\n        \"questionId\": \"6620bf7b884a8741d0e75392\",\n        \"selectedAnswers\": [\"Agricultura\"]\n      },\n      {\n        \"questionId\": \"6620bf7b884a8741d0e75396\",\n        \"selectedAnswers\": [\"Huitzilopochtli\", \"Quetzalcóatl\", \"Tláloc\"]\n      },\n      {\n        \"questionId\": \"6620bf7b884a8741d0e7539a\",\n        \"selectedAnswers\": [\"Texcoco\", \"Tula\"]\n      }\n    ]\n}",
+                "form": []
+            }
         },
         {
             "_id": "be98674e-75e4-4fc9-9a91-408d05b8c7da",
@@ -418,19 +437,17 @@
             "colId": "883e614d-1ffd-4481-92d9-28d491084bae",
             "containerId": "351a35e3-03a2-4771-b636-f8d389290594",
             "name": "List",
-            "url": "http://localhost:9000/api/courses/661efa360a189ce75d848ff6/lessons/661efb260a189ce75d849039/questions",
+            "url": "http://localhost:9000/api/courses/6620bf7b884a8741d0e75345/lessons/6620bf7b884a8741d0e75348/questions",
             "method": "GET",
             "sortNum": 20000,
             "created": "2024-04-16T13:41:21.706Z",
-            "modified": "2024-04-16T22:34:39.052Z",
+            "modified": "2024-04-18T06:50:40.595Z",
             "headers": [
                 {
                     "name": "User-Role",
                     "value": "teacher"
                 }
-            ],
-            "params": [],
-            "tests": []
+            ]
         },
         {
             "_id": "baa6c652-e3c9-486c-99c7-a166c58f8cf2",
@@ -480,105 +497,95 @@
             "colId": "883e614d-1ffd-4481-92d9-28d491084bae",
             "containerId": "fa494607-b43d-46df-81b8-2ab3e2aaa845",
             "name": "Available",
-            "url": "http://localhost:9000/api/courses/661efa360a189ce75d848ff6/lessons/661efa540a189ce75d848ffa/available",
+            "url": "http://localhost:9000/api/courses/6620f7007ea62875fa0e5aa1/lessons/6620f7007ea62875fa0e5aa4/available",
             "method": "PUT",
             "sortNum": 25000,
             "created": "2024-04-16T15:08:55.154Z",
-            "modified": "2024-04-16T22:47:53.734Z",
+            "modified": "2024-04-18T10:34:25.736Z",
             "headers": [
                 {
                     "name": "User-Role",
                     "value": "teacher"
                 }
             ],
-            "params": [],
             "body": {
                 "type": "json",
                 "raw": "{\n  \"available\": true\n}",
                 "form": []
-            },
-            "tests": []
+            }
         },
         {
             "_id": "e508c8e0-3230-4ef3-b5ff-e38d7e37683f",
             "colId": "883e614d-1ffd-4481-92d9-28d491084bae",
             "containerId": "c3b49a67-aba0-4f5b-ac29-e9fa7b42603b",
             "name": "Available",
-            "url": "http://localhost:9000/api/courses/661efa360a189ce75d848ff6/available",
+            "url": "http://localhost:9000/api/courses/6620f7007ea62875fa0e5aa1/available",
             "method": "PUT",
             "sortNum": 27500,
             "created": "2024-04-16T14:20:08.986Z",
-            "modified": "2024-04-16T22:46:54.730Z",
+            "modified": "2024-04-18T10:34:06.082Z",
             "headers": [
                 {
                     "name": "User-Role",
                     "value": "teacher"
                 }
             ],
-            "params": [],
             "body": {
                 "type": "json",
                 "raw": "{\n  \"available\": true\n}",
                 "form": []
-            },
-            "tests": []
+            }
         },
         {
             "_id": "524c7f53-1bed-4feb-9c97-4d9c944e85df",
             "colId": "883e614d-1ffd-4481-92d9-28d491084bae",
             "containerId": "d1cb8f47-fb1f-4510-a14d-465dc103db3b",
             "name": "Delete",
-            "url": "http://localhost:9000/api/users/661ef9560a189ce75d848fbf",
+            "url": "http://localhost:9000/api/users/661ef9920a189ce75d848fd0",
             "method": "DELETE",
             "sortNum": 30000,
             "created": "2024-04-16T13:15:56.190Z",
-            "modified": "2024-04-16T22:19:57.000Z",
+            "modified": "2024-04-18T04:15:44.272Z",
             "headers": [
                 {
                     "name": "User-Role",
                     "value": "admin"
                 }
-            ],
-            "params": [],
-            "tests": []
+            ]
         },
         {
             "_id": "cbf4ba06-5ddc-42e3-94e0-f329423772e9",
             "colId": "883e614d-1ffd-4481-92d9-28d491084bae",
             "containerId": "c3b49a67-aba0-4f5b-ac29-e9fa7b42603b",
             "name": "Delete",
-            "url": "http://localhost:9000/api/courses/661ef9c00a189ce75d848fd3",
+            "url": "http://localhost:9000/api/courses/6620b3654c9b325c3df44284",
             "method": "DELETE",
             "sortNum": 30000,
             "created": "2024-04-16T13:20:28.695Z",
-            "modified": "2024-04-16T22:22:29.247Z",
+            "modified": "2024-04-18T05:45:58.244Z",
             "headers": [
                 {
                     "name": "User-Role",
                     "value": "teacher"
                 }
-            ],
-            "params": [],
-            "tests": []
+            ]
         },
         {
             "_id": "d4707635-306d-442c-8775-0bf22d1ae2dc",
             "colId": "883e614d-1ffd-4481-92d9-28d491084bae",
             "containerId": "fa494607-b43d-46df-81b8-2ab3e2aaa845",
             "name": "Delete",
-            "url": "http://localhost:9000/api/courses/661efa360a189ce75d848ff6/lessons/661efa680a189ce75d849006",
+            "url": "http://localhost:9000/api/courses/661efa360a189ce75d848ff6/lessons/661efa5f0a189ce75d849000",
             "method": "DELETE",
             "sortNum": 30000,
             "created": "2024-04-16T13:21:15.194Z",
-            "modified": "2024-04-16T22:26:36.853Z",
+            "modified": "2024-04-18T04:19:56.507Z",
             "headers": [
                 {
                     "name": "User-Role",
                     "value": "teacher"
                 }
-            ],
-            "params": [],
-            "tests": []
+            ]
         },
         {
             "_id": "e5821b17-a2f1-4233-baab-a0988bb6d81b",
@@ -628,19 +635,17 @@
             "colId": "883e614d-1ffd-4481-92d9-28d491084bae",
             "containerId": "351a35e3-03a2-4771-b636-f8d389290594",
             "name": "Delete",
-            "url": "http://localhost:9000/api/courses/661ebeabd113985423f0ca60/lessons/661ebed5d113985423f0ca70/questions/661ec4493628410008ac747c",
+            "url": "http://localhost:9000/api/courses/661efa360a189ce75d848ff6/lessons/661efb260a189ce75d849039/questions/6620a29f3204b2365848b1a8",
             "method": "DELETE",
             "sortNum": 50000,
             "created": "2024-04-16T13:41:21.709Z",
-            "modified": "2024-04-16T18:37:12.701Z",
+            "modified": "2024-04-18T04:50:56.038Z",
             "headers": [
                 {
                     "name": "User-Role",
                     "value": "teacher"
                 }
-            ],
-            "params": [],
-            "tests": []
+            ]
         }
     ]
 }

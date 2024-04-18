@@ -1,6 +1,9 @@
 import Course from "../../models/Course.js";
 
-const store = async (title, isApproved, isAvailable, lessons, order) => {
+const store = async (title, isApproved, isAvailable, lessons) => {
+    const lastCourse = await getLastOrder();
+    const order = lastCourse && !isNaN(lastCourse.order) ? lastCourse.order + 1 : 1;
+
     const course = new Course({
         title: title,
         is_approved: isApproved,
@@ -76,6 +79,24 @@ const pullLessonId = async (lessonId, courseId) => {
     return await course;
 }
 
+const pushStudentId = async (studentId, courseId) => {
+    const course = await get(courseId);
+    course.enrolled_students.push(studentId);
+    return await course.save();
+}
+
+const pullStudentId = async (studentId, courseId) => {
+    const course = await get(courseId);
+    const indexOf = course.enrolled_students.indexOf(studentId);
+
+    if (indexOf > -1) {
+        course.enrolled_students.splice(indexOf, 1);
+        await course.save();
+    }
+
+    return await course;
+}
+
 const getLastOrder = async () => {
     return await Course.findOne({}, {}, { sort: { 'order': -1 } })
 }
@@ -94,4 +115,6 @@ export default {
     pushLessonId,
     pullLessonId,
     getLastOrder,
+    pushStudentId,
+    pullStudentId,
 }

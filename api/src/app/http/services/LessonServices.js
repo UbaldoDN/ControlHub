@@ -1,12 +1,16 @@
 import Lesson from "../../models/Lesson.js";
 
-const store = async (title, threshold, isAvailable, questions, order) => {
+const store = async (title, threshold, isAvailable, questions) => {
+    const lastLesson = await getLastOrder();
+    const order = lastLesson && !isNaN(lastLesson.order) ? lastLesson.order + 1 : 1;
+    
     const lesson = new Lesson({
         title: title,
         threshold: threshold,
         is_available: isAvailable,
         questions: questions,
         order: order,
+        is_approved: false,
     });
 
     return await lesson.save();
@@ -33,10 +37,6 @@ const destroy = async (lessonId) => {
 
 const get = async (lessonId) => {
     return await Lesson.findById(lessonId);
-}
-
-const list = async () => {
-    return await Lesson.find({});
 }
 
 const existsById = async (lessonId) => {
@@ -74,17 +74,23 @@ const getLastOrder = async () => {
     return await Lesson.findOne({}, {}, { sort: { 'order': -1 } })
 }
 
+const approved = async (lessonId, isApproved) => {
+    const lesson = await get(lessonId);
+    lesson.is_approved = isApproved;
+    return await lesson.save();
+}
+
 export default {
     destroy,
     store,
     update,
     updateAvailable,
     get,
-    list,
     existsById,
     existsByTitle,
     existsByIdAndTitle,
     pushQuestionId,
     pullQuestionId,
     getLastOrder,
+    approved,
 }

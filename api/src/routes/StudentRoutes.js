@@ -9,5 +9,6 @@ router.get("/:studentId/courses/:courseId", StudentRequests.validateGet, Student
 router.get("/:studentId/enrolls", StudentRequests.validateEnrollList, StudentControllers.getEnrolls);
 router.post("/:studentId/courses/:courseId/enroll", StudentRequests.validateEnrollment, StudentControllers.enroll);
 router.post("/:studentId/courses/:courseId/unenroll", StudentRequests.validateUnEnrollment, StudentControllers.unenroll);
+router.post("/:studentId/courses/:courseId/lessons/:lessonId/answerLesson", StudentRequests.validateAnswer, StudentControllers.answerLesson);
 
 export default router;

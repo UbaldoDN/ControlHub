@@ -3,12 +3,15 @@ import CourseServices from "../services/CourseServices.js";
 
 const index = async (request, response) => {
     try {
-        const lessons = await LessonServices.list();
-        if (!lessons) {
+        const { courseId } = request.params;
+        const course = await CourseServices.get(courseId);
+        
+        if (!course) {
             return response.json([]);
         }
         
-        const lessonList = await Promise.all(lessons.map(async (lesson) => {
+        await course.populate("lessons");
+        const lessonList = await Promise.all(course.lessons.map(async (lesson) => {
             return await responseJsonFormat(lesson)
         }));
 
@@ -23,9 +26,7 @@ const store = async (request, response) => {
     try {
         const { courseId } = request.params;
         const { title, threshold } = request.body;
-        const lastLesson = await LessonServices.getLastOrder();
-        const order = lastLesson && !isNaN(lastLesson.order) ? lastLesson.order + 1 : 1;
-        const lesson = await LessonServices.store(title, threshold, false, [], order);
+        const lesson = await LessonServices.store(title, threshold, false, []);
         await CourseServices.pushLessonId(lesson._id, courseId);
         response.status(201).json(await responseJsonFormat(lesson));
     } catch (error) {
@@ -101,6 +102,7 @@ const responseJsonFormat = async (lesson) => {
         title: lesson.title,
         threshold: lesson.threshold,
         isAvailable: lesson.is_available,
+        isApproved: lesson.is_approved,
         questions: populateQuestions
     }
 };

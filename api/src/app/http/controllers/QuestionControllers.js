@@ -3,12 +3,14 @@ import QuestionServices from "../services/QuestionServices.js";
 
 const index = async (request, response) => {
     try {
-        const questions = await QuestionServices.list();
-        if (!questions) {
+        const { lessonId } = request.params;
+        const lesson = await LessonServices.get(lessonId);
+        if (!lesson) {
             return response.json([]);
         }
         
-        const questionList = await Promise.all(questions.map(async (question) => {
+        await lesson.populate("questions");
+        const questionList = await Promise.all(lesson.questions.map(async (question) => {
             return await responseJsonFormat(question)
         }));
 

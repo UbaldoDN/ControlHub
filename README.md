@@ -7,6 +7,14 @@ En todas las solicitudes realizadas deben tener la cabecera "User-Role" y tiene 
     User-Role = admin || teacher || student
 ```
 
+## Nota 2:
+Cree un endpoint para poblar con cursos, lecciones y preguntas de cada tipo, se encuentra en la carpeta:
+
+```bash
+    #Role Admin/Users/Generate Data
+    http://localhost:9000/api/users/generateData
+```
+
 ## Instalación y Configuración
 
 ### Elección

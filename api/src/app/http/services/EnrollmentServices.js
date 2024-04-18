@@ -5,43 +5,56 @@ const getByStudent = async (studentId) => {
 }
 
 const existsEnrollment = async (studentId, courseId) => {
-    return await Enrollment.findOne({ student: studentId, enrolled_courses: { $in: [courseId] } });
+    return await Enrollment.findOne({ student: studentId, "enrolled_courses.course": courseId });
 }
 
 const store = async (studentId, courseId) => {
-    const enrollment = new Enrollment({
-        student: studentId,
-        enrollment_date: Date.now()
-    });
+    const enrollment = new Enrollment({ student: studentId});
 
-    enrollment.enrolled_courses.push(courseId);
+    enrollment.enrolled_courses.push({ course: courseId, enrollment_date: Date.now()});
     return await enrollment.save();
 }
 
 const pushEnrollmentCourse = async (studentId, courseId) => {
     const student = await getByStudent(studentId);
-    student.enrolled_courses.push(courseId);
-    student.enrollment_date = Date.now()
+    student.enrolled_courses.push({ course: courseId, enrollment_date: Date.now()});
     return await student.save();
 }
 
 const pullUnEnrollmentCourse = async (studentId, courseId) => {
     const student = await getByStudent(studentId);
-    const indexOf = student.enrolled_courses.indexOf(courseId);
+    const indexOfCourse = student.enrolled_courses.findIndex(course => course.course.equals(courseId));
 
-    if (indexOf > -1) {
-        student.enrolled_courses.splice(indexOf, 1);
-
+    if (indexOfCourse > -1) {
+        student.enrolled_courses.splice(indexOfCourse, 1);
         await student.save();
     }
 
     return await student;
 }
 
+const pushCompletedCourse = async (studentId, courseId) => {
+    const student = await getByStudent(studentId);
+    const indexOfCourse = student.enrolled_courses.findIndex(course => course.course.equals(courseId));
+    
+    if (indexOfCourse > -1) {
+        return;
+    }
+    
+    student.completed_courses.push({ course: courseId, enrollment_date: Date.now()});
+    return await student.save();
+}
+
+const findEnrollmentCourse = async (studentId, courseId) => {
+    return await Enrollment.findOne({ student: studentId, "enrolled_courses.course": courseId });
+}
+
 export default {
     pullUnEnrollmentCourse,
     pushEnrollmentCourse,
+    pushCompletedCourse,
     store,
     existsEnrollment,
     getByStudent,
+    findEnrollmentCourse,
 }

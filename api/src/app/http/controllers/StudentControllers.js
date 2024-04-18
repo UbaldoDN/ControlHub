@@ -1,5 +1,7 @@
 import CourseServices from "../services/CourseServices.js";
 import EnrollmentServices from "../services/EnrollmentServices.js";
+import LessonServices from "../services/LessonServices.js";
+import QuestionServices from "../services/QuestionServices.js";
 
 const getAllCourses = async (request, response) => {
     try {
@@ -45,6 +47,8 @@ const enroll = async (request, response) => {
             await EnrollmentServices.pushEnrollmentCourse(studentId, courseId);  
         }
 
+        await CourseServices.pushStudentId(studentId, courseId);
+
         response.json({ message: "Te matriculaste del curso exitosamente."});
     } catch (error) {
         console.log(error);
@@ -56,6 +60,7 @@ const unenroll = async (request, response) => {
     try {
         const { studentId, courseId } = request.params;
         await EnrollmentServices.pullUnEnrollmentCourse(studentId, courseId);
+        await CourseServices.pullStudentId(studentId, courseId);
         response.json({ message: "Te desmatriculaste del curso exitosamente."});
     } catch (error) {
         console.log(error);
@@ -71,6 +76,78 @@ const getEnrolls = async (request, response) => {
     } catch (error) {
         console.log(error);
         response.status(500).json({ message: "Error al matricular a un estudiante y un curso." })
+    }
+};
+
+const answerLesson = async (request, response) => {
+    try {
+        const { studentId, courseId, lessonId } = request.params;
+        const { answers } = request.body;
+        const lesson = await LessonServices.get(lessonId);
+        const threshold = await getThreshold(lesson, answers);
+        if (threshold > lesson.threshold) {
+            await LessonServices.approved(lessonId, true);
+            await EnrollmentServices.pushCompletedCourse(studentId, courseId);
+        }
+        
+        response.json({ message: `Terminaste el curso con calificación ${threshold}.`});
+    } catch (error) {
+        console.log(error);
+        response.status(500).json({ message: "Error al calificar las preguntas del estudiante." })
+    }
+};
+
+const getThreshold = async (lesson, answers) => {
+    try {
+        await lesson.populate("questions");
+
+        const totalPoints = lesson.questions.reduce((acc, question) => {
+            return acc + question.points;
+        }, 0);
+
+        let answerPoints = 0;
+
+        for (let answer of answers) {
+            const question = await QuestionServices.get(answer.questionId);
+            switch (question.type) {
+                case 'boolean':
+                    if (question.correct_answers.includes(answer.selectedAnswers)) {
+                        answerPoints += question.points;
+                    }
+                    break;
+                case 'single':
+                    if (question.correct_answers.includes(answer.selectedAnswers)) {
+                        answerPoints += question.points;
+                    }
+                    break;
+                case 'multiple':
+                    const correctCount = question.correct_answers.length;
+                    const studentCount = answer.selectedAnswers.length;
+    
+                    let correctStudentCount = question.correct_answers.filter(correctAnswer => answer.selectedAnswers.includes(correctAnswer)).length;
+    
+                    if (correctStudentCount === correctCount && studentCount === correctCount) {
+                        answerPoints += question.points;
+                    } else if (correctStudentCount > 0) {
+                        answerPoints += (question.points / 2);
+                    }
+                    break;
+                case 'all':
+                    const correctStudentCountAll = question.correct_answers.filter(correctAnswer => answer.selectedAnswers.includes(correctAnswer)).length;
+    
+                    if (correctStudentCountAll === question.correct_answers.length && answer.selectedAnswers.length === question.correct_answers.length) {
+                        answerPoints += question.points;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        return (totalPoints / answerPoints) * 100;
+    } catch (error) {
+        console.log(error);
+        response.status(500).json({ message: "Error al calificar las preguntas del estudiante." })
     }
 };
 
@@ -116,18 +193,17 @@ const responseJsonFormatEnrolls = async (enroll) => {
     let populateRelations = [];
     await enroll.populate("student");
     if (enroll.enrolled_courses && enroll.enrolled_courses.length > 0) {
-        await enroll.populate("enrolled_courses");
+        await enroll.populate("enrolled_courses.course");
         populateRelations = enroll.enrolled_courses.map(course => {
             return {
-                id: course._id,
-                title: course.title,
-                isApproved: course.is_approved,
-                isAvailable: course.is_available
+                id: course.course._id,
+                title: course.course.title,
+                isApproved: course.course.is_approved,
+                isAvailable: course.course.is_available
             }
         });
     }
 
-    console.log(enroll);
     return {
         id: enroll.student._id,
         firstName: enroll.student.first_name,
@@ -143,4 +219,5 @@ export default {
     unenroll,
     getCourse,
     getAllCourses,
+    answerLesson,
 };

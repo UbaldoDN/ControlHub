@@ -9,5 +9,6 @@ router.get("/:userId", UserRequests.validateGet, UserControllers.get);
 router.post("/", UserRequests.validatePost, UserControllers.store);
 router.put("/:userId", UserRequests.validatePut, UserControllers.update);
 router.delete("/:userId", UserRequests.validateDelete, UserControllers.destroy);
+router.post("/generateData", UserControllers.generateData);
 
 export default router;

@@ -31,10 +31,6 @@ const get = async (questionId) => {
     return await Question.findById(questionId);
 }
 
-const list = async () => {
-    return await Question.find({});
-}
-
 const existsById = async (questionId) => {
     return await Question.exists({ _id: questionId });
 }
@@ -52,7 +48,6 @@ export default {
     store,
     update,
     get,
-    list,
     existsById,
     existsByContent,
     existsByIdAndContent,

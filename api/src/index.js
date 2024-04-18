@@ -11,16 +11,10 @@ import LessonRequests from "./app/http/requests/LessonRequests.js";
 import QuestionRoutes from "./routes/QuestionRoutes.js";
 import StudentRoutes from "./routes/StudentRoutes.js";
 
-// Create the express app and  import the type of app from express;
 const app = express();
 
-// Cors
 app.use(cors());
-
-//configure env;
 dotenv.config();
-
-// Parser
 app.use(express.json());
 app.use(
     express.urlencoded({
@@ -43,11 +37,8 @@ app.use("/api/courses/:courseId/lessons/:lessonId/questions", await CheckUserRol
 
 app.use("/api/students", await CheckUserRole('student'), StudentRoutes);
 
-// Listen the server
 app.listen(PORT, async () => {
     console.log(`🗄️ Server on http:localhost:${PORT}`);
-
-    // Connect To The Database
     try {
         await mongoose.connect(
             process.env.DATABASE_URL
